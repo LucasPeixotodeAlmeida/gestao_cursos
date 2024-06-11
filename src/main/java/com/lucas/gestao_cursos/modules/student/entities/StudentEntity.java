@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,13 +28,14 @@ public class StudentEntity {
     private UUID id;
     private String name;
 
-    @Pattern(regexp = "^(?!\\s*$).+", message = "O username não deve conter")
+    @NotBlank()
+    @Pattern(regexp = "\\S+", message = "O username não deve conter")
     private String username;
 
     @Email(message = "O e-mail deve ser válido")
     private String email;
 
-    @Length(min = 8, max = 120)
+    @Length(min = 8, max = 120, message = "A senha deve conter no mínimo 8 caracteres")
     private String password;
 
     @CreationTimestamp
