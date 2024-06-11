@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lucas.gestao_cursos.modules.student.entities.StudentEntity;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
     
     @PostMapping("/")
-    public void createStudent(@RequestBody StudentEntity studentEntity){
+    public void createStudent(@Valid @RequestBody StudentEntity studentEntity){
         System.out.println("estudante:");
         System.out.println(studentEntity.getEmail());
     }
