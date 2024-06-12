@@ -1,13 +1,14 @@
 package com.lucas.gestao_cursos.modules.student.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lucas.gestao_cursos.modules.student.entities.StudentEntity;
-import com.lucas.gestao_cursos.modules.student.repositories.StudentRepository;
+import com.lucas.gestao_cursos.modules.student.services.CreateStudentService;
 
 import jakarta.validation.Valid;
 
@@ -16,10 +17,15 @@ import jakarta.validation.Valid;
 public class StudentController {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private CreateStudentService createStudentService;
     
     @PostMapping("/")
-    public StudentEntity createStudent(@Valid @RequestBody StudentEntity studentEntity){
-        return studentRepository.save(studentEntity);
+    public ResponseEntity<Object> createStudent(@Valid @RequestBody StudentEntity studentEntity){
+        try {
+           var result = this.createStudentService.execute(studentEntity);
+           return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
