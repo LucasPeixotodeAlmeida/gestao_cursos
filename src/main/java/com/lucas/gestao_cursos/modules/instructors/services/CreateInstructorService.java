@@ -24,6 +24,7 @@ public class CreateInstructorService {
         });
         var password = passwordEncoder.encode(instructorEntity.getPassword());
         instructorEntity.setPassword(password);
+                
         return this.instructorRepository.save(instructorEntity);
     }
 }
