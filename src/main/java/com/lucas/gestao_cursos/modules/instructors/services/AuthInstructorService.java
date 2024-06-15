@@ -1,5 +1,8 @@
 package com.lucas.gestao_cursos.modules.instructors.services;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import javax.naming.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,7 @@ public class AuthInstructorService {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
         var token = JWT.create().withIssuer("umedy")
+            .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
             .withSubject(instructor.getId().toString())
             .sign(algorithm);
 
