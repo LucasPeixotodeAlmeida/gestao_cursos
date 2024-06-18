@@ -12,13 +12,13 @@ import com.lucas.gestao_cursos.modules.student.dto.AuthStudentRequestDTO;
 import com.lucas.gestao_cursos.modules.student.services.AuthStudentService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/student")
 public class AuthStudentController {
 
     @Autowired
     private AuthStudentService authStudentService;
 
-    @PostMapping("/student")
+    @PostMapping("/auth")
     public ResponseEntity<Object> auth(@RequestBody AuthStudentRequestDTO authStudentRequestDTO){
         try {
             var token = this.authStudentService.execute(authStudentRequestDTO);

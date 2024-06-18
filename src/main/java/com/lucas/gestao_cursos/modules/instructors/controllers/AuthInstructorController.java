@@ -14,13 +14,13 @@ import com.lucas.gestao_cursos.modules.instructors.dto.AuthInstructorDTO;
 import com.lucas.gestao_cursos.modules.instructors.services.AuthInstructorService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/instructor")
 public class AuthInstructorController {
     
     @Autowired
     private AuthInstructorService authInstructorService;
 
-    @PostMapping("/instructor")
+    @PostMapping("/auth")
     public ResponseEntity<Object> create(@RequestBody AuthInstructorDTO authInstructorDTO) throws AuthenticationException{
         try {
             var result = this.authInstructorService.execute(authInstructorDTO);
