@@ -27,15 +27,17 @@ public class SecurityStudentFilter extends OncePerRequestFilter{
                 SecurityContextHolder.getContext().setAuthentication(null);
                 String header = request.getHeader("Authorization");
 
-                if (header != null) {
-                    var token = this.jwtProvider.validateToken(header);
-
-                    if (token == null) {
-                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                if(request.getRequestURI().startsWith("/student")){
+                    if (header != null) {
+                        var token = this.jwtProvider.validateToken(header);
+    
+                        if (token == null) {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        }
+    
+                        request.setAttribute("student_id", token.getSubject());
+                        System.out.println(token);
                     }
-
-                    request.setAttribute("candidate_id", token.getSubject());
-                    System.out.println(token);
                 }
 
                 filterChain.doFilter(request, response);
