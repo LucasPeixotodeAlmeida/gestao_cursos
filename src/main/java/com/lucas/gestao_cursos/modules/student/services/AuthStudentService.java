@@ -45,7 +45,7 @@ public class AuthStudentService {
 
         var token = JWT.create().withIssuer("umedy")
             .withExpiresAt(expiresIn)
-            .withClaim("roles", Arrays.asList("student"))
+            .withClaim("roles", Arrays.asList("STUDENT"))
             .withSubject(student.getId().toString())
             .sign(algorithm);
 
