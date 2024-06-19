@@ -1,8 +1,11 @@
 package com.lucas.gestao_cursos.security;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -36,7 +39,14 @@ public class SecurityStudentFilter extends OncePerRequestFilter{
                         }
     
                         request.setAttribute("student_id", token.getSubject());
-                        System.out.println(token);
+                        var roles = token.getClaim("roles").asList(Object.class);
+                        var grants = roles.stream().map(
+                            role -> new SimpleGrantedAuthority(role.toString())
+                        ).toList();
+                    
+                    UsernamePasswordAuthenticationToken auth = 
+                        new UsernamePasswordAuthenticationToken(token.getSubject(), null, grants);
+                    SecurityContextHolder.getContext().setAuthentication(auth);
                     }
                 }
 
