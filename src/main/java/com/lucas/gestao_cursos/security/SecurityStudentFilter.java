@@ -27,7 +27,7 @@ public class SecurityStudentFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-                SecurityContextHolder.getContext().setAuthentication(null);
+                //SecurityContextHolder.getContext().setAuthentication(null);
                 String header = request.getHeader("Authorization");
 
                 if(request.getRequestURI().startsWith("/student")){
@@ -41,7 +41,7 @@ public class SecurityStudentFilter extends OncePerRequestFilter{
                         request.setAttribute("student_id", token.getSubject());
                         var roles = token.getClaim("roles").asList(Object.class);
                         var grants = roles.stream().map(
-                            role -> new SimpleGrantedAuthority(role.toString())
+                            role -> new SimpleGrantedAuthority("ROLE_" + role.toString().toUpperCase())
                         ).toList();
                     
                     UsernamePasswordAuthenticationToken auth = 
