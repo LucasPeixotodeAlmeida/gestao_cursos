@@ -3,6 +3,7 @@ package com.lucas.gestao_cursos.modules.instructors.controllers;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class CourseController {
     private CreateCourseService createCourseService;
     
     @PostMapping("/")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public CourseEntity createCourse(@Valid @RequestBody CreateCourseDTO createCourseDTO, HttpServletRequest request){
         var instructorId = request.getAttribute("instructor_id");
 
