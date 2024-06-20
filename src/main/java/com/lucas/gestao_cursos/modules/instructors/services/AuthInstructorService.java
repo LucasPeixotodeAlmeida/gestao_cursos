@@ -2,6 +2,7 @@ package com.lucas.gestao_cursos.modules.instructors.services;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 import javax.naming.AuthenticationException;
 
@@ -44,6 +45,7 @@ public class AuthInstructorService {
         var token = JWT.create().withIssuer("umedy")
             .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
             .withSubject(instructor.getId().toString())
+            .withClaim("roles", Arrays.asList("INSTRUCTOR"))
             .sign(algorithm);
 
         return token;
